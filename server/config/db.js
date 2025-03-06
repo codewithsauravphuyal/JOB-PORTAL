@@ -1,32 +1,9 @@
-// import mongoose from "mongoose";
-
-// // Function to Connect MongoDB database
-// const connectDB = async () => {
-//     try {
-//         await mongoose.connect(`${process.env.MONGODB_URI}/job-portal`);
-
-//         console.log("Database Connected Successfully...");
-//     } catch (error) {
-//         console.error("Database Connection Failed:", error.message);
-//         process.exit(1);
-//     }
-// };
-
-// export default connectDB;
-
 import mongoose from "mongoose";
 
 // Function to Connect MongoDB database
 const connectDB = async () => {
     try {
-        const uri = process.env.MONGODB_URI;  // Ensure this is a valid URI in your .env file
-        if (!uri) {
-            console.error("MongoDB URI not provided in .env file.");
-            process.exit(1);
-        }
-
-        // Connect to MongoDB (no deprecated options)
-        await mongoose.connect(uri, { dbName: 'job-portal' });
+        await mongoose.connect(`${process.env.MONGODB_URI}/job-portal`);
 
         console.log("Database Connected Successfully...");
     } catch (error) {
@@ -36,3 +13,4 @@ const connectDB = async () => {
 };
 
 export default connectDB;
+
