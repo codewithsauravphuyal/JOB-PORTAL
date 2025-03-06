@@ -1,0 +1,23 @@
+*************Client installation*******************
+npm install react-router-dom
+npm install react-toastify
+npm install quill
+npm install @clerk/clerk-react
+npm i k-convert 
+npm i moment
+
+
+
+*************Server installation*******************
+npm init -y
+npm i express
+npm i jsonwebtoken
+npm i bcrypt
+npm install mongoose@8.10.1 nodemon@3.1.7 svix@1.42.0
+npm i cors multer dotenv cloudinary 
+npm install @sentry/node --save
+npm install @sentry/profiling-node
+
+
+
+a0DCQqeDkjep4W1h
