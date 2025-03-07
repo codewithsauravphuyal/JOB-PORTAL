@@ -9,7 +9,7 @@ const JobCard = ({ job }) => {
         <div className="border border-gray-200 p-6 shadow-lg rounded-lg bg-white hover:shadow-xl transition">
             {/* Company Info */}
             <div className="flex items-center gap-3">
-                <img className="h-10 w-10 object-contain" src={assets.company_icon} alt="Company Logo" />
+                <img className="h-10 w-10 object-contain" src={job.companyId.image} alt="Company Logo" />
             </div>
 
             {/* Job Title */}

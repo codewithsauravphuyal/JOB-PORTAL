@@ -5,6 +5,8 @@ npm install quill
 npm install @clerk/clerk-react
 npm i k-convert 
 npm i moment
+npm i axios
+npm install --save react-toastify
 
 
 
