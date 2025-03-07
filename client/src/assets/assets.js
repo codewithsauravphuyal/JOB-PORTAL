@@ -34,10 +34,6 @@ import lock_icon from './lock_icon.svg'
 import samsung_logo from './samsung_logo.png'
 import adobe_logo from './adobe_logo.png'
 import amazon_logo from './amazon_logo.png'
-import digital_pathshala_logo from './digital_Pathshala.png'
-import youth_it_logo from './youth_it.png'
-import code_it_logo from './code_it.png'
-import lunar_it_logo from './lunar_it.png'
 
 
 export const assets = {
@@ -77,10 +73,6 @@ export const assets = {
     samsung_logo,
     adobe_logo,
     amazon_logo,
-    digital_pathshala_logo,
-    youth_it_logo,
-    code_it_logo,
-    lunar_it_logo
 }
 
 export const JobCategories = [
