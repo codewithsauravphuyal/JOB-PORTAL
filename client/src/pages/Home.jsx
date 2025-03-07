@@ -4,7 +4,7 @@ import Hero from '../components/Hero'
 import JobListing from '../components/JobListing'
 import RusumeAi from '../components/RusumeAi'
 import Footer from '../components/Footer'
-
+ 
 function Home() {
   return (
     <div>
