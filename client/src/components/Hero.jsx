@@ -46,7 +46,7 @@ const Hero = () => {
                         Trusted By Leading Companies
                     </p>
                     <img className="h-10 md:h-12 grayscale hover:grayscale-0 transition duration-300" src={assets.code_it_logo} alt="Code IT" />
-                    <img className="h-14 md:h-16 grayscale hover:grayscale-0 transition duration-300" src={assets.digital_pathshala_logo} alt="Digital Pathshala" />
+                    <img className="h-14 md:h-16 grayscale hover:grayscale-0 transition duration-300" src={assets.pathshala_logo} alt="Digital Pathshala" />
                     <img className="h-10 md:h-12 grayscale hover:grayscale-0 transition duration-300" src={assets.hunchha_digital_logo} alt="Hunchha Digital" />
                     <img className="h-10 md:h-12 grayscale hover:grayscale-0 transition duration-300" src={assets.lunar_it_logo} alt="Lunar IT" />
                     <img className="h-10 md:h-12 filter invert grayscale hover:grayscale-0 transition duration-300" src={assets.youth_it_logo} alt="Youth IT" />
