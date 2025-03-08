@@ -76,7 +76,7 @@ const Hero = () => {
                     />
                     <img
                         className="h-14 md:h-16 grayscale hover:grayscale-0 transition duration-300"
-                        src={assets.digital_pathshala_logo}
+                        src={assets.pathshala_logo}
                         alt="Digital Pathshala"
                     />
                     <img
