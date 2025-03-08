@@ -30,10 +30,7 @@ const Hero = () => {
                         "Your Dream Job is Just a Click Away!"
                     </h2>
                     <p className='mb-8 max-w-xl mx-auto text-sm font-light px-5'>
-                        "Hired Nepal is your gateway to thousands of job opportunities across Nepal.
-                        Whether you're a fresh graduate or an experienced professional, we connect
-                        you with the right employers. Upload your CV, explore job listings, and
-                        apply with ease. Start your journey toward a brighter career today!"
+                    Hired Nepal connects you to job opportunities across Nepal. Whether you're a fresh graduate or an experienced professional, upload your CV, explore listings, and apply with ease. Take the first step in your career today!
                     </p>
 
                     <div className='flex items-center justify-between bg-white rounded text-gray-600 max-w-xl pl-4 mx-4 sm:mx-auto'>
