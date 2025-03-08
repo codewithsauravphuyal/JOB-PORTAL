@@ -40,7 +40,7 @@ const JobCard = ({ job }) => {
                     Apply Now
                 </button>
                 <button
-                    onClick={() => { navigate(`/job-details/${job._id}`); scrollTo(0, 0); }}
+                     onClick={() => { navigate(`/apply-job/${job._id}`); scrollTo(0, 0); }}
                     className="text-gray-500 border border-gray-500 rounded px-4 py-2 cursor-pointer">
                     Learn More
                 </button>
