@@ -12,6 +12,7 @@ import ViewApplications from './pages/ViewApplications';
 import 'quill/dist/quill.snow.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ResumeAI from './pages/ResumeAI';
 
 
 const App = () => {
@@ -25,6 +26,7 @@ const App = () => {
     <Route path="/" element={<Home />} />
     <Route path="/apply-job/:id" element={<ApplyJob />} />
     <Route path="/applications" element={<Applications />} />
+    <Route path="/create-resume" element={<ResumeAI />} />
 
     {/* Nested Routes under Dashboard */}
     {companyToken && (

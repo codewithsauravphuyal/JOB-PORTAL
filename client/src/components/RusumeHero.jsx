@@ -1,7 +1,7 @@
 import React from 'react';
 import { assets } from '../assets/assets';
 
-function ResumeAi() {
+function ResumeHero() {
     return (
         <div className="container px-4 2xl:px-20 mx-auto my-20">
             <div className="relative bg-gradient-to-r from-red-50 to-purple-50 p-12 sm:p-24 lg:p-32 rounded-l">
@@ -15,7 +15,7 @@ function ResumeAi() {
 
                     {/* Resume Creation Button */}
                     <a href="/create-resume" className="bg-gradient-to-r from-red-800 to-red-950 text-white px-6 py-3 rounded-lg text-lg font-medium shadow hover:bg-red-700 transition">
-                        Create Your Resume Now
+                        Get Started
                     </a>
                 </div>
 
@@ -32,4 +32,4 @@ function ResumeAi() {
     );
 }
 
-export default ResumeAi;
+export default ResumeHero;

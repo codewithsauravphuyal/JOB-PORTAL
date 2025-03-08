@@ -2,7 +2,7 @@ import React from 'react'
 import Navbar from '../components/Navbar'
 import Hero from '../components/Hero'
 import JobListing from '../components/JobListing'
-import RusumeAi from '../components/RusumeAi'
+import RusumeHero from '../components/RusumeHero'
 import Footer from '../components/Footer'
  
 function Home() {
@@ -11,7 +11,7 @@ function Home() {
      <Navbar />
      <Hero />
      <JobListing />
-     <RusumeAi />
+     <RusumeHero />
      <Footer />
     </div>
   )

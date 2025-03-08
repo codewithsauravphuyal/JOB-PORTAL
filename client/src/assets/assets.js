@@ -39,6 +39,7 @@ import pathshala_logo from './pathshala.png'
 import youth_it_logo from './youth_it.png'
 import code_it_logo from './code_it.png'
 import lunar_it_logo from './lunar_it.png'
+import herobanner from './herobanner.svg'
 
 
 export const assets = {
@@ -82,7 +83,8 @@ export const assets = {
     pathshala_logo,
     youth_it_logo,
     code_it_logo,
-    lunar_it_logo
+    lunar_it_logo,
+    herobanner
 }
 
 export const JobCategories = [
