@@ -120,7 +120,7 @@ if (userApplications.length> 0 && JobData) {
               </div>
             </div>
             <div className="text-center md:text-right mt-4 md:mt-0">
-              <button onClick={applyHandler} className="bg-red-600 p-2.5 px-10 text-white rounded">{isAlreadyApplied? 'Already Applied': 'Apply Now' }</button>
+              <button onClick={applyHandler} className="bg-red-600 p-2.5 px-10 text-white rounded cursor-pointer">{isAlreadyApplied? 'Already Applied': 'Apply Now' }</button>
               <p className="mt-1 text-gray-500 text-sm">
                 Posted {moment(JobData?.date).fromNow() || 'just now'}
               </p>
@@ -130,7 +130,7 @@ if (userApplications.length> 0 && JobData) {
             <div className="w-full lg:w-2/3">
               <h2 className="font-bold text-2xl mb-4">Job Description</h2>
               <div className="rich-text" dangerouslySetInnerHTML={{ __html: JobData?.description || 'No description available' }} />
-              <button onClick={applyHandler} className="bg-red-600 p-2.5 px-10 text-white rounded mt-10">{isAlreadyApplied? 'Already Applied': 'Apply Now' }</button>
+              <button onClick={applyHandler} className="bg-red-600 p-2.5 px-10 text-white rounded mt-10 cursor-pointer">{isAlreadyApplied? 'Already Applied': 'Apply Now' }</button>
             </div>
             {/* Right Section More Jobs */}
             <div className="w-full lg:w-1/3 mt-8 lg:mt-0 lg:ml-8 space-y-5">

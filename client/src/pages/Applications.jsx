@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { assets, jobsApplied } from '../assets/assets';
+import { assets } from '../assets/assets';
 import moment from 'moment';
 import { AppContext } from '../context/AppContext';
 import { useAuth, useUser } from '@clerk/clerk-react';
@@ -10,46 +10,53 @@ import { toast } from 'react-toastify';
 
 function Applications() {
 
-  const { user } = useUser()
-  const { getToken } = useAuth()
+  const { user } = useUser();
+  const { getToken } = useAuth();
 
   const [isEdit, setIsEdit] = useState(false);
-  const [resume, setResume] = useState(null)
+  const [resume, setResume] = useState(null);
+  const [resumeError, setResumeError] = useState('');  // To store validation error message
 
-  const { backendUrl, userData, userApplications, fetchUserData, fetchUserApplications } = useContext(AppContext)
+  const { backendUrl, userData, userApplications, fetchUserData, fetchUserApplications } = useContext(AppContext);
 
   const updateResume = async () => {
-    try {
-      const formData = new FormData()
-      formData.append('resume', resume)
+    // Validate if a resume is selected
+    if (!resume) {
+      setResumeError('Please upload a resume before saving.');
+      return;
+    }
 
-      const token = await getToken()
+    try {
+      const formData = new FormData();
+      formData.append('resume', resume);
+
+      const token = await getToken();
 
       const { data } = await axios.post(backendUrl + '/api/users/update-resume',
         formData,
         { headers: { Authorization: `Bearer ${token}` } }
-      )
-      if (data.success) {
-        toast.success(data.message)
-        await fetchUserData()
+      );
 
+      if (data.success) {
+        toast.success(data.message);
+        await fetchUserData();
       } else {
-        toast.error(data.message)
+        toast.error(data.message);
       }
     } catch (error) {
-      toast.error(error.message)
+      toast.error(error.message);
     }
 
-    setIsEdit(false)
-    setResume(null)
-
-  }
+    setIsEdit(false);
+    setResume(null);
+    setResumeError('');  // Reset error message
+  };
 
   useEffect(() => {
     if (user) {
-      fetchUserApplications()
+      fetchUserApplications();
     }
-  }, [user])
+  }, [user]);
 
   return (
     <>
@@ -74,6 +81,7 @@ function Applications() {
                   <img src={assets.profile_upload_icon} alt="" />
                 </label>
                 <button onClick={updateResume} className='bg-green-100 text-green-400 rounded-lg px-4 py-2'>Save</button>
+                {resumeError && <p className="text-red-600 text-sm mt-2">{resumeError}</p>} {/* Error message display */}
               </>
               : <div className='flex gap-2'>
                 <a target='_blank' href={userData.resume} className='bg-red-100 text-red-600 px-4 py-2 rounded-lg' >Resume</a>
@@ -112,7 +120,6 @@ function Applications() {
             </tbody>
           </table>
         </div>
-
       </div>
       <Footer />
     </>

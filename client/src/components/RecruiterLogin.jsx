@@ -13,12 +13,50 @@ const RecruiterLogin = () => {
     const [email, setEmail] = useState('');
     const [image, setImage] = useState(false);
     const [isTextDataSubmitted, setIsTextDataSubmitted] = useState(false);
+    const [passwordError, setPasswordError] = useState('');
     const { setShowRecruiterLogin, backendUrl, setCompanyToken, setCompanyData } = useContext(AppContext);
 
+    // Password validation checks (for Sign Up only)
+    const passwordRules = {
+        length: /.{6,20}/, // 6-8 characters
+        uppercase: /[A-Z]/, // At least one uppercase letter
+        number: /\d/, // At least one number
+        symbol: /[!@#$%^&*(),.?":{}|<>]/, // At least one special symbol
+    };
+
+    const [validation, setValidation] = useState({
+        length: false,
+        uppercase: false,
+        number: false,
+        symbol: false,
+    });
+
+    // Handle password change for Sign Up
+    const handlePasswordChange = (e) => {
+        const newPassword = e.target.value;
+        setPassword(newPassword);
+
+        // Validate each rule dynamically (only for Sign Up)
+        if (state === 'Sign Up') {
+            setValidation({
+                length: passwordRules.length.test(newPassword),
+                uppercase: passwordRules.uppercase.test(newPassword),
+                number: passwordRules.number.test(newPassword),
+                symbol: passwordRules.symbol.test(newPassword),
+            });
+        }
+    };
+
+    // Handle form submit
     const onSubmitHandler = async (e) => {
         e.preventDefault();
         if (state === 'Sign Up' && !isTextDataSubmitted) {
             return setIsTextDataSubmitted(true);
+        }
+
+        // Only proceed if there are no password validation errors for Sign Up
+        if (state === 'Sign Up' && (!validation.length || !validation.uppercase || !validation.number || !validation.symbol)) {
+            return toast.error('Please correct the password error before proceeding.');
         }
 
         try {
@@ -70,41 +108,37 @@ const RecruiterLogin = () => {
                 <p className="text-sm">Welcome back! Please sign in to continue.</p>
 
                 {state === 'Sign Up' && isTextDataSubmitted ? (
-                    <>
-                        <div className="flex items-center gap-4 my-10">
-                            <label htmlFor="image">
-                                <img
-                                    className="w-16 h-16 rounded-full object-cover cursor-pointer"
-                                    src={image ? URL.createObjectURL(image) : assets.upload_area}
-                                    alt="Upload Logo"
-                                />
-                                <input
-                                    onChange={(e) => setImage(e.target.files[0])}
-                                    type="file"
-                                    id="image"
-                                    hidden
-                                    accept="image/*"
-                                />
-                            </label>
-                            <p>Upload Company <br />Logo</p>
-                        </div>
-                    </>
+                    <div className="flex items-center gap-4 my-10">
+                        <label htmlFor="image">
+                            <img
+                                className="w-16 h-16 rounded-full object-cover cursor-pointer"
+                                src={image ? URL.createObjectURL(image) : assets.upload_area}
+                                alt="Upload Logo"
+                            />
+                            <input
+                                onChange={(e) => setImage(e.target.files[0])}
+                                type="file"
+                                id="image"
+                                hidden
+                                accept="image/*"
+                            />
+                        </label>
+                        <p>Upload Company <br />Logo</p>
+                    </div>
                 ) : (
                     <>
                         {state !== 'Login' && (
-                            <>
-                                <div className="border px-4 py-2 flex items-center gap-2 rounded-full mt-5">
-                                    <img src={assets.person_icon} alt="" />
-                                    <input
-                                        className="outline-none text-sm"
-                                        onChange={(e) => setName(e.target.value)}
-                                        value={name}
-                                        type="text"
-                                        placeholder="Company Name"
-                                        required
-                                    />
-                                </div>
-                            </>
+                            <div className="border px-4 py-2 flex items-center gap-2 rounded-full mt-5">
+                                <img src={assets.person_icon} alt="" />
+                                <input
+                                    className="outline-none text-sm"
+                                    onChange={(e) => setName(e.target.value)}
+                                    value={name}
+                                    type="text"
+                                    placeholder="Company Name"
+                                    required
+                                />
+                            </div>
                         )}
 
                         <div className="border px-4 py-2 flex items-center gap-2 rounded-full mt-5">
@@ -118,24 +152,61 @@ const RecruiterLogin = () => {
                             />
                         </div>
 
-                        <div className="border px-4 py-2 flex items-center gap-2 rounded-full mt-5">
-                            <img src={assets.lock_icon} alt="" />
-                            <input
-                                className="outline-none text-sm"
-                                onChange={(e) => setPassword(e.target.value)}
-                                value={password}
-                                type="password"
-                                placeholder="Password"
-                            />
-                        </div>
+                        {state === 'Sign Up' && (
+                            <div className="border px-4 py-2 flex items-center gap-2 rounded-full mt-5">
+                                <img src={assets.lock_icon} alt="" />
+                                <input
+                                    className="outline-none text-sm w-full"
+                                    onChange={handlePasswordChange}
+                                    value={password}
+                                    type="password"
+                                    placeholder="Password"
+                                />
+                            </div>
+                        )}
+
+                        {/* Password validation messages for Sign Up */}
+                        {state === 'Sign Up' && (
+                            <ul className="mt-2">
+                                <li className={`text-sm ${validation.length ? 'text-green-600' : 'text-red-600'}`}>
+                                    Password must be more than 6 characters long
+                                </li>
+                                <li className={`text-sm ${validation.uppercase ? 'text-green-600' : 'text-red-600'}`}>
+                                    Password must have an uppercase letter
+                                </li>
+                                <li className={`text-sm ${validation.number ? 'text-green-600' : 'text-red-600'}`}>
+                                    Password must have a number
+                                </li>
+                                <li className={`text-sm ${validation.symbol ? 'text-green-600' : 'text-red-600'}`}>
+                                    Password must have a symbol
+                                </li>
+                            </ul>
+                        )}
                     </>
+                )}
+
+                {state === 'Login' && (
+                    <div className="border px-4 py-2 flex items-center gap-2 rounded-full mt-5">
+                        <img src={assets.lock_icon} alt="" />
+                        <input
+                            className="outline-none text-sm"
+                            onChange={(e) => setPassword(e.target.value)}
+                            value={password}
+                            type="password"
+                            placeholder="Password"
+                        />
+                    </div>
                 )}
 
                 {state === 'Login' && (
                     <p className="text-sm text-red-600 mt-4 cursor-pointer">Forgot password?</p>
                 )}
 
-                <button type="submit" className="bg-red-600 w-full text-white py-2 rounded-full mt-4">
+                <button
+                    type="submit"
+                    className="bg-red-600 w-full text-white py-2 rounded-full mt-4 cursor-pointer"
+                    disabled={state === 'Sign Up' && (!validation.length || !validation.uppercase || !validation.number || !validation.symbol)}
+                >
                     {state === 'Login' ? 'Login' : isTextDataSubmitted ? 'Create an account' : 'Next'}
                 </button>
 
@@ -162,7 +233,7 @@ const RecruiterLogin = () => {
                 )}
 
                 <img
-                    onClick={(e) => setShowRecruiterLogin(false)}
+                    onClick={() => setShowRecruiterLogin(false)}
                     className="absolute top-5 right-5 cursor-pointer"
                     src={assets.cross_icon}
                     alt=""
