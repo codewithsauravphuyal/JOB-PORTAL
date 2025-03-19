@@ -80,7 +80,6 @@ const ManageJobs = () => {
     </div>
   ) : (
     <div className="container p-4 max-w-5xl">
-      <div className="overflow-x-auto">
       <table className="w-full max-w-4xl bg-white border-gray-200 max-sm:text-sm shadow-md">
         <thead className="bg-gray-100">
           <tr>
@@ -107,7 +106,7 @@ const ManageJobs = () => {
               <td className="py-4 px-6 relative">
                 <div className="relative inline-block text-left dropdown">
                   <button
-                    className="text-gray-500 border-gray-300 w-10 h-10 flex items-center justify-center"
+                    className="text-gray-500 border-gray-300  flex items-center justify-center"
                     onClick={(e) => {
                       e.stopPropagation();
                       setDropdownOpen(dropdownOpen === index ? null : index);
@@ -144,7 +143,6 @@ const ManageJobs = () => {
           ))}
         </tbody>
       </table>
-      </div>
     </div>
   );
 };
