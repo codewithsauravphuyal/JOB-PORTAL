@@ -101,21 +101,21 @@ const ManageJobs = () => {
                       {/* Action to show/hide */}
                       <button
                         onClick={() => changeJobVisibility(job._id)}
-                        className="block w-full text-left px-4 py-2 cursor-pointer hover:bg-red-100">
+                        className="block w-full text-left px-4 py-2 cursor-pointer hover:bg-red-200">
                         {job.visible ? 'Hide' : 'Show'}
                       </button>
 
                       {/* Edit Action */}
                       <button
                         onClick={() => editJob(job._id)}
-                        className="block w-full text-left px-4 py-2 cursor-pointer hover:bg-red-100">
+                        className="block w-full text-left px-4 py-2 cursor-pointer hover:bg-red-200">
                         Edit
                       </button>
 
                       {/* Delete Action */}
                       <button
                         onClick={() => deleteJob(job._id)}
-                        className="block w-full text-left px-4 py-2 cursor-pointer hover:bg-red-100">
+                        className="block w-full text-left px-4 py-2 cursor-pointer hover:bg-red-200">
                         Delete
                       </button>
                     </div>
