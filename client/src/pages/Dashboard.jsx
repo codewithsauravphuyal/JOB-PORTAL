@@ -18,11 +18,11 @@ const Dashboard = () => {
         navigate('/')
     }
 
-    useEffect (()=>{
-        if (companyData){
-            navigate('/dashboard/manage-job')
+    useEffect(() => {
+        if (companyData && window.location.pathname === "/") {
+          navigate("/dashboard/manage-job");
         }
-    },[companyData])
+      }, [companyData, navigate]);      
 
 
     return (

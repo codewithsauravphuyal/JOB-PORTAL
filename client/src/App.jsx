@@ -10,36 +10,34 @@ import AddJob from './pages/AddJob';
 import ManageJobs from './pages/ManageJobs';
 import ViewApplications from './pages/ViewApplications';
 import 'quill/dist/quill.snow.css';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ResumeAI from './pages/ResumeAI';
 
-
 const App = () => {
+  const { showRecruiterLogin, companyToken } = useContext(AppContext);
 
-  const { showRecruiterLogin, companyToken } = useContext(AppContext)
   return (
     <div>
-  {showRecruiterLogin && <RecruiterLogin />}
-  <ToastContainer />
-  <Routes>
-    <Route path="/" element={<Home />} />
-    <Route path="/apply-job/:id" element={<ApplyJob />} />
-    <Route path="/applications" element={<Applications />} />
-    <Route path="/create-resume" element={<ResumeAI />} />
+      {showRecruiterLogin && <RecruiterLogin />}
+      <ToastContainer />
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<Home />} />
+        <Route path="/apply-job/:id" element={<ApplyJob />} />
+        <Route path="/applications" element={<Applications />} />
+        <Route path="/create-resume" element={<ResumeAI />} />
 
-    {/* Nested Routes under Dashboard */}
-    {companyToken && (
-      <Route path="/dashboard" element={<Dashboard />}>
-        <Route path="add-job" element={<AddJob />} />
-        <Route path="manage-job" element={<ManageJobs />} />
-        <Route path="view-applications" element={<ViewApplications />} />
-      </Route>
-    )}
-
-  </Routes>
-</div>
-
+        {/* Protected Routes - Dashboard */}
+        {companyToken && (
+          <Route path="/dashboard" element={<Dashboard />}>
+            <Route path="add-job" element={<AddJob />} />
+            <Route path="manage-job" element={<ManageJobs />} />
+            <Route path="view-applications" element={<ViewApplications />} />
+          </Route>
+        )}
+      </Routes>
+    </div>
   );
 };
 

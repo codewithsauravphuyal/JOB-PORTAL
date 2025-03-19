@@ -9,7 +9,6 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 function Applications() {
-
   const { user } = useUser();
   const { getToken } = useAuth();
 
@@ -67,29 +66,33 @@ function Applications() {
           {
             isEdit || (userData?.resume === "")
               ? <>
-                <label className='flex items-center' htmlFor="resumeUpload">
-                  <p className='bg-red-100 text-red-600 px-4 py-2 rounded-lg mr-2 cursor-pointer'>
-                    {resume ? resume.name : "Select Resume"}
-                  </p>
-                  <input
-                    id='resumeUpload'
-                    type='file'
-                    accept="application/pdf"
-                    hidden
-                    onChange={(e) => setResume(e.target.files[0])}
-                  />
-                  <img src={assets.profile_upload_icon} className='cursor-pointer' alt="" />
-                </label>
-                <button onClick={updateResume} className='bg-green-100 text-green-400 rounded-lg px-4 py-2 cursor-pointer'>Save</button>
-                {resumeError && <p className="text-red-600 text-sm mt-2">{resumeError}</p>} {/* Error message display */}
-              </>
-              : <div className='flex gap-2'>
-                <a target='_blank' href={userData.resume} className='bg-red-100 text-red-600 px-4 py-2 rounded-lg' >Resume</a>
-                <button onClick={() => setIsEdit(true)} className='text-gray-500 border border-gray-300 rounded-lg px-4 py-2' >Edit</button>
-              </div>
+                  <label className='flex items-center' htmlFor="resumeUpload">
+                    <p className='bg-red-100 text-red-600 px-4 py-2 rounded-lg mr-2 cursor-pointer'>
+                      {resume ? resume.name : "Select Resume"}
+                    </p>
+                    <input
+                      id='resumeUpload'
+                      type='file'
+                      accept="application/pdf"
+                      hidden
+                      onChange={(e) => setResume(e.target.files[0])}
+                    />
+                    <img src={assets.profile_upload_icon} className='cursor-pointer' alt="" />
+                  </label>
+                  <button onClick={updateResume} className='bg-green-100 text-green-400 rounded-lg px-4 py-2 cursor-pointer'>Save</button>
+                  {resumeError && <p className="text-red-600 text-sm mt-2">{resumeError}</p>} {/* Error message display */}
+                </>
+              : userData?.resume ? (
+                  <div className='flex gap-2'>
+                    <a target='_blank' href={userData.resume} className='bg-red-100 text-red-600 px-4 py-2 rounded-lg' >Resume</a>
+                    <button onClick={() => setIsEdit(true)} className='text-gray-500 border border-gray-300 rounded-lg px-4 py-2' >Edit</button>
+                  </div>
+                ) : (
+                  <p className='text-red-600 text-sm'>No resume uploaded</p> // Display a message if the resume is missing
+                )
           }
         </div>
-        <div className="container mx-auto">
+        <div className="container mx-auto overflow-x-auto">  {/* Wrapper for horizontal scrolling */}
           <table className="min-w-full bg-white rounded-lg shadow-md border-collapse">
             <thead className="bg-gray-100 rounded-t-lg">
               <tr>
@@ -104,7 +107,7 @@ function Applications() {
               {userApplications.map((job, index) => (
                 <tr key={index} className="even:bg-gray-50 hover:bg-gray-100 transition-all">
                   <td className="py-4 px-6 flex items-center gap-3">
-                    <img className="w-8 h-8 rounded-full" src={job.companyId.image} alt="" />
+                    <img className="w-8 h-8 rounded-full max-sm:hidden" src={job.companyId.image} alt="" />
                     {job.companyId.name}
                   </td>
                   <td className="py-4 px-6">{job.jobId.title}</td>
