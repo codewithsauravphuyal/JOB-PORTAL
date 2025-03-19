@@ -13,7 +13,6 @@ import 'quill/dist/quill.snow.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ResumeAI from './pages/ResumeAI';
-import AdminDashboard from './pages/AdminDashboard';
 
 
 const App = () => {
@@ -38,8 +37,6 @@ const App = () => {
       </Route>
     )}
 
-    {/* Admin Dashboard Routes */}
-    <Route path='/admin-dashboard' element={<AdminDashboard />} />
   </Routes>
 </div>
 

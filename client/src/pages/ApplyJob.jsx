@@ -122,7 +122,8 @@ if (userApplications.length> 0 && JobData) {
             <div className="text-center md:text-right mt-4 md:mt-0">
               <button onClick={applyHandler} className="bg-red-600 p-2.5 px-10 text-white rounded cursor-pointer">{isAlreadyApplied? 'Already Applied': 'Apply Now' }</button>
               <p className="mt-1 text-gray-500 text-sm">
-                Posted {moment(JobData?.date).fromNow() || 'just now'}
+                {/* Posted {moment(JobData?.date).fromNow() || 'just now'} */}
+                Posted on {moment(JobData?.date).format('ll') || 'just now'}
               </p>
             </div>
           </div>

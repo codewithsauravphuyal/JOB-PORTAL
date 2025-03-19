@@ -71,47 +71,60 @@ const ManageJobs = () => {
         <p className='text-xl sm:text-2xl'>No Jobs Available or posted</p>
       </div>
     ) : (
-      <div className="container mx-auto p-4">
-        <table className="min-w-full bg-white rounded-lg shadow-md">
+      <div className="container p-4 max-w-5xl">
+        <table className="w-full max-w-4xl bg-white border-gray-200 max-sm:text-sm shadow-md">
           <thead className="bg-gray-100">
             <tr>
-              <th className="py-2 px-4 text-left text-gray-700 font-semibold max-sm:hidden">#</th>
-              <th className="py-2 px-4 text-left text-gray-700 font-semibold">Job Title</th>
-              <th className="py-2 px-4 text-left text-gray-700 font-semibold max-sm:hidden">Date</th>
-              <th className="py-2 px-4 text-left text-gray-700 font-semibold max-sm:hidden">Location</th>
-              <th className="py-2 px-4 text-left text-gray-700 font-semibold">Applications</th>
-              <th className="py-2 px-4 text-left text-gray-700 font-semibold">Visible</th>
+              <th className="py-2 px-4 text-center text-gray-700 font-semibold max-sm:hidden">#</th>
+              <th className="py-2 px-4 text-center text-gray-700 font-semibold">Job Title</th>
+              <th className="py-2 px-4 text-center text-gray-700 font-semibold max-sm:hidden">Date</th>
+              <th className="py-2 px-4 text-center text-gray-700 font-semibold max-sm:hidden">Location</th>
+              <th className="py-2 px-4 text-center text-gray-700 font-semibold">Applications</th>
+              <th className="py-2 px-4 text-center text-gray-700 font-semibold">Action</th>
             </tr>
           </thead>
           <tbody>
             {jobs.map((job, index) => (
-              <tr key={index} className="even:bg-gray-50 hover:bg-red-100 transition-all">
+              <tr 
+                key={index} 
+                className={`transition-all ${job.visible ? 'bg-green-100 hover:bg-green-200' : 'bg-red-100 hover:bg-red-200'}`}
+              >
                 <td className="py-2 px-4 text-center max-sm:hidden">{index + 1}</td>
                 <td className="py-2 px-4">{job.title}</td>
-                <td className="py-2 px-4 max-sm:hidden">{moment(job.date).format('ll')}</td>
-                <td className="py-2 px-4 max-sm:hidden">{job.location}</td>
-                <td className="py-2 px-4">{job.applicants}</td>
-                <td className="py-2 px-4 text-center">
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      onClick={() => changeJobVisibility(job._id)}
-                      type="checkbox"
-                      className="sr-only peer"
-                      checked={job.visible}
-                    />
-                    <div className="w-11 h-6 bg-red-500 rounded-full peer-checked:bg-green-500 peer transition-colors duration-300"></div>
-                    <div className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-all peer-checked:translate-x-5"></div>
-                  </label>
+                <td className="py-2 px-4 text-center max-sm:hidden">{moment(job.date).format('ll')}</td>
+                <td className="py-2 px-4 text-center max-sm:hidden">{job.location}</td>
+                <td className="py-2 px-4 text-center">{job.applicants}</td>
+                <td className="py-4 px-6 relative">
+                  <div className="relative inline-block text-left group">
+                    <button className="text-gray-500 action-button">...</button>
+                    <div className="z-10 hidden absolute left-full top-0 mt-2 w-25 bg-white border border-gray-200 shadow group-hover:block">
+                      {/* Action to show/hide */}
+                      <button
+                        onClick={() => changeJobVisibility(job._id)}
+                        className="block w-full text-left px-4 py-2 cursor-pointer hover:bg-red-200">
+                        {job.visible ? 'Hide' : 'Show'}
+                      </button>
+
+                      {/* Edit Action */}
+                      <button
+                        onClick={() => editJob(job._id)}
+                        className="block w-full text-left px-4 py-2 cursor-pointer hover:bg-red-200">
+                        Edit
+                      </button>
+
+                      {/* Delete Action */}
+                      <button
+                        onClick={() => deleteJob(job._id)}
+                        className="block w-full text-left px-4 py-2 cursor-pointer hover:bg-red-200">
+                        Delete
+                      </button>
+                    </div>
+                  </div>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <div className="mt-4 flex justify-end">
-          <button onClick={() => navigate('/dashboard/add-job')} className="w-28 py-4 bg-red-600 text-white rounded">
-            Add new job
-          </button>
-        </div>
       </div>
     )
   );

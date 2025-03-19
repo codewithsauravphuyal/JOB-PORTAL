@@ -68,7 +68,7 @@ function Applications() {
             isEdit || (userData?.resume === "")
               ? <>
                 <label className='flex items-center' htmlFor="resumeUpload">
-                  <p className='bg-red-100 text-red-600 px-4 py-2 rounded-lg mr-2'>
+                  <p className='bg-red-100 text-red-600 px-4 py-2 rounded-lg mr-2 cursor-pointer'>
                     {resume ? resume.name : "Select Resume"}
                   </p>
                   <input
@@ -78,9 +78,9 @@ function Applications() {
                     hidden
                     onChange={(e) => setResume(e.target.files[0])}
                   />
-                  <img src={assets.profile_upload_icon} alt="" />
+                  <img src={assets.profile_upload_icon} className='cursor-pointer' alt="" />
                 </label>
-                <button onClick={updateResume} className='bg-green-100 text-green-400 rounded-lg px-4 py-2'>Save</button>
+                <button onClick={updateResume} className='bg-green-100 text-green-400 rounded-lg px-4 py-2 cursor-pointer'>Save</button>
                 {resumeError && <p className="text-red-600 text-sm mt-2">{resumeError}</p>} {/* Error message display */}
               </>
               : <div className='flex gap-2'>
@@ -89,7 +89,7 @@ function Applications() {
               </div>
           }
         </div>
-        <div className="overflow-x-auto">
+        <div className="container mx-auto">
           <table className="min-w-full bg-white rounded-lg shadow-md border-collapse">
             <thead className="bg-gray-100 rounded-t-lg">
               <tr>

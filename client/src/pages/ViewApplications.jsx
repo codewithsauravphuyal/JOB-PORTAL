@@ -60,7 +60,7 @@ const ViewApplications = () => {
         <p className='text-xl sm:text-2xl'>No Applications Available</p>
       </div>
     ) : (
-      <div className="container mx-auto p-4">
+      <div className="container mx-auto">
         <table className="w-full max-w-4xl bg-white border-gray-200 max-sm:text-sm shadow-md">
           <thead className="bg-gray-100">
             <tr>
@@ -85,11 +85,11 @@ const ViewApplications = () => {
                   <td className="py-2 px-4 max-sm:hidden">{applicant.jobId.location}</td>
                   <td className="py-2 px-4">
                     <a
-                      href={applicant.userId.resume} // Assuming applicants have a resumeUrl property
+                      href={applicant.userId.resume}
                       target='_blank'
                       className="bg-blue-100 text-blue-500 px-5 py-2 rounded inline-flex gap-2 items-center hover:bg-blue-200"
                     >
-                      Resume <img src={assets.resume_download_icon} alt="Resume Icon" className="w-3 h-3" />
+                      <img src={assets.resume_download_icon} alt="Resume Icon" className="w-3 h-3" />
                     </a>
                   </td>
                   <td className="py-4 px-6 relative">
