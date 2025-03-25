@@ -4,22 +4,25 @@ import Footer from '../components/Footer';
 import { assets } from '../assets/assets';
 import moment from 'moment';
 import { AppContext } from '../context/AppContext';
-import { useAuth, useUser } from '@clerk/clerk-react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-function Applications() {
-  const { user } = useUser();
-  const { getToken } = useAuth();
 
+function Applications() {
   const [isEdit, setIsEdit] = useState(false);
   const [resume, setResume] = useState(null);
-  const [resumeError, setResumeError] = useState('');  // To store validation error message
+  const [resumeError, setResumeError] = useState('');
 
-  const { backendUrl, userData, userApplications, fetchUserData, fetchUserApplications } = useContext(AppContext);
+  const { 
+    backendUrl, 
+    userData, 
+    userToken,
+    userApplications, 
+    fetchUserData, 
+    fetchUserApplications 
+  } = useContext(AppContext);
 
   const updateResume = async () => {
-    // Validate if a resume is selected
     if (!resume) {
       setResumeError('Please upload a resume before saving.');
       return;
@@ -29,11 +32,10 @@ function Applications() {
       const formData = new FormData();
       formData.append('resume', resume);
 
-      const token = await getToken();
-
-      const { data } = await axios.post(backendUrl + '/api/users/update-resume',
+      const { data } = await axios.post(
+        backendUrl + '/api/users/update-resume',
         formData,
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { token: userToken } }
       );
 
       if (data.success) {
@@ -48,14 +50,14 @@ function Applications() {
 
     setIsEdit(false);
     setResume(null);
-    setResumeError('');  // Reset error message
+    setResumeError('');
   };
 
   useEffect(() => {
-    if (user) {
+    if (userToken) {
       fetchUserApplications();
     }
-  }, [user]);
+  }, [userToken]);
 
   return (
     <>

@@ -60,7 +60,6 @@ const ViewApplications = () => {
       </div>
     ) : (
       <div className="container">
-        <div className="overflow-x-auto">
           <table className="w-full max-w-4xl bg-white border-gray-100 max-sm:text-sm shadow-md">
             <thead className="bg-gray-100">
               <tr>
@@ -102,7 +101,7 @@ const ViewApplications = () => {
                             ...
                           </button>
                           {openDropdown === index && (
-                            <div className="z-10 absolute right-0 mt-1 w-31 bg-white border border-gray-100 shadow rounded-md sm:right-full sm:w-40">
+                            <div className=" absolute right-0 w-20 bg-white border border-gray-100 shadow rounded-md sm:right-full">
                               <button onClick={() => changeJobApplicationStatus(applicant._id, 'Accepted')} className="block w-full text-left px-3 py-1 text-blue-500 hover:bg-blue-100">Accept</button>
                               <button onClick={() => changeJobApplicationStatus(applicant._id, 'Rejected')} className="block w-full text-left px-3 py-1 text-red-500 hover:bg-red-100">Reject</button>
                             </div>
@@ -122,7 +121,6 @@ const ViewApplications = () => {
             </tbody>
           </table>
         </div>
-      </div>
     )
   );
 };

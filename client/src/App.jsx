@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import ApplyJob from './pages/ApplyJob';
 import Applications from './pages/Applications';
 import RecruiterLogin from './components/RecruiterLogin';
+import JobSeekerLogin from './components/JobSeekerLogin';
 import { AppContext } from './context/AppContext';
 import Dashboard from './pages/Dashboard';
 import AddJob from './pages/AddJob';
@@ -13,13 +14,15 @@ import 'quill/dist/quill.snow.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ResumeAI from './pages/ResumeAI';
+import ProfileManagement from './pages/ProfileManagement';
 
 const App = () => {
-  const { showRecruiterLogin, companyToken } = useContext(AppContext);
+  const { showRecruiterLogin, showJobSeekerLogin, companyToken } = useContext(AppContext);
 
   return (
     <div>
       {showRecruiterLogin && <RecruiterLogin />}
+      {showJobSeekerLogin && <JobSeekerLogin />}
       <ToastContainer />
       <Routes>
         {/* Public Routes */}
@@ -27,6 +30,7 @@ const App = () => {
         <Route path="/apply-job/:id" element={<ApplyJob />} />
         <Route path="/applications" element={<Applications />} />
         <Route path="/create-resume" element={<ResumeAI />} />
+        <Route path="/profile" element={<ProfileManagement />} />
 
         {/* Protected Routes - Dashboard */}
         {companyToken && (

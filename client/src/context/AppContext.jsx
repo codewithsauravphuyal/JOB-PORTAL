@@ -1,14 +1,11 @@
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useAuth, useUser } from "@clerk/clerk-react";
 
 export const AppContext = createContext();
 
 export const AppContextProvider = (props) => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
-  const { user } = useUser();
-  const { getToken } = useAuth();
 
   const [searchFilter, setSearchFilter] = useState({
     title: '',
@@ -18,10 +15,28 @@ export const AppContextProvider = (props) => {
   const [isSearched, setIsSearched] = useState(false);
   const [jobs, setJobs] = useState([]);
   const [showRecruiterLogin, setShowRecruiterLogin] = useState(false);
+  const [showJobSeekerLogin, setShowJobSeekerLogin] = useState(false);
   const [companyToken, setCompanyToken] = useState(null);
   const [companyData, setCompanyData] = useState(null);
+  const [userToken, setUserToken] = useState(null);
   const [userData, setUserData] = useState(null);
   const [userApplications, setUserApplications] = useState([]);
+
+  const loginUser = async (email, password) => {
+    try {
+      const { data } = await axios.post(backendUrl + '/api/users/login', { email, password });
+      if (data.success) {
+        setUserData(data.user);
+        setUserToken(data.token);
+        localStorage.setItem('userToken', data.token);
+        return { success: true };
+      }
+      return { success: false, message: data.message };
+    } catch (error) {
+      console.error("Login failed:", error);
+      return { success: false, message: error.response?.data?.message || error.message };
+    }
+  };
 
   // Function to fetch jobs
   const fetchJobs = async () => {
@@ -54,40 +69,75 @@ export const AppContextProvider = (props) => {
     }
   };
 
-  // Function to fetch user data
-  const fetchUserData = async () => {
-    try {
-      const token = await getToken();
-      const { data } = await axios.get(backendUrl + "/api/users/user", {
-        headers: { Authorization: `Bearer ${token}` },
+ // Function to fetch user data
+const fetchUserData = async () => {
+  try {
+      const { data } = await axios.get(`${backendUrl}/api/users/user`, {
+          headers: { 
+              token: userToken 
+              // OR if using Bearer token:
+              // Authorization: `Bearer ${userToken}`
+          }
       });
 
       if (data.success) {
-        setUserData(data.user);
+          setUserData(data.user);
       } else {
-        toast.error(data.message);
+          if (data.message.includes('token') || data.message.includes('authorized')) {
+              userLogout();
+              toast.error('Session expired. Please login again.');
+          }
       }
-    } catch (error) {
-      toast.error(error.message);
-    }
+  } catch (error) {
+      console.error("Fetch user error:", error);
+      if (error.response?.status === 401) {
+          userLogout();
+          toast.error('Session expired. Please login again.');
+      }
+  }
+};
+
+// Function to fetch user applications
+const fetchUserApplications = async () => {
+  try {
+      const { data } = await axios.get(`${backendUrl}/api/users/applications`, {
+          headers: { 
+              token: userToken 
+              // OR if using Bearer token:
+              // Authorization: `Bearer ${userToken}`
+          }
+      });
+
+      if (data.success) {
+          setUserApplications(data.applications);
+      }
+  } catch (error) {
+      console.error("Fetch applications error:", error);
+      if (error.response?.status === 401) {
+          userLogout();
+          toast.error('Session expired. Please login again.');
+      }
+  }
+};
+
+  // Logout functions
+  const userLogout = () => {
+    setUserToken(null);
+    setUserData(null);
+    localStorage.removeItem('userToken');
   };
 
-  // Function to fetch user's applied application data
-  const fetchUserApplications = async () => {
-    try {
-      const token = await getToken();
-      const { data } = await axios.get(backendUrl + "/api/users/applications", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      if (data.success) {
-        setUserApplications(data.applications);
-      } else {
-        toast.error(data.message);
-      }
-    } catch (error) {
-      toast.error(error.message);
+  useEffect(() => {
+    const storedUserToken = localStorage.getItem('userToken');
+    if (storedUserToken) {
+      setUserToken(storedUserToken);
     }
+  }, []);
+
+  const companyLogout = () => {
+    setCompanyToken(null);
+    setCompanyData(null);
+    localStorage.removeItem('companyToken');
   };
 
   useEffect(() => {
@@ -97,20 +147,25 @@ export const AppContextProvider = (props) => {
     if (storedCompanyToken) {
       setCompanyToken(storedCompanyToken);
     }
-  }, []); // Runs on component mount
+
+    const storedUserToken = localStorage.getItem("userToken");
+    if (storedUserToken) {
+      setUserToken(storedUserToken);
+    }
+  }, []);
 
   useEffect(() => {
     if (companyToken) {
       fetchCompanyData();
     }
-  }, [companyToken]); // Fetch company data if companyToken is set
+  }, [companyToken]);
 
   useEffect(() => {
-    if (user) {
+    if (userToken) {
       fetchUserData();
       fetchUserApplications();
     }
-  }, [user]); // Fetch user data and applications when user is available
+  }, [userToken]);
 
   const value = {
     setSearchFilter,
@@ -121,17 +176,24 @@ export const AppContextProvider = (props) => {
     setJobs,
     showRecruiterLogin,
     setShowRecruiterLogin,
+    showJobSeekerLogin,
+    setShowJobSeekerLogin,
     companyToken,
     setCompanyToken,
     companyData,
     setCompanyData,
-    backendUrl,
+    userToken,
+    setUserToken,
     userData,
     setUserData,
     userApplications,
     setUserApplications,
     fetchUserData,
     fetchUserApplications,
+    userLogout,
+    loginUser,
+    companyLogout,
+    backendUrl,
   };
 
   return (
