@@ -136,7 +136,7 @@ const JobSeekerLogin = () => {
                                     />
                                 </div>
                                 <div className="border px-4 py-2 flex items-center gap-2 rounded-full mt-5">
-                                    <img src={assets.phone_icon} alt="" />
+                                    <img src={assets.phone_icon} className='w-4.5 h-4.5' alt="" />
                                     <input
                                         className="outline-none text-sm w-full"
                                         onChange={(e) => setPhone(e.target.value)}
