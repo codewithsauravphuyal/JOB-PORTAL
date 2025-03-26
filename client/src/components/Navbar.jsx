@@ -45,12 +45,7 @@ const Navbar = () => {
                   alt="Profile"
                 />
               </Link>
-              <button 
-                onClick={handleLogout} 
-                className="text-red-600 cursor-pointer hover:underline"
-              >
-                Logout
-              </button>
+             
             </>
           ) : (
             <>
